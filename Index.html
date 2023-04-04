@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch and Timer</title>
+    <style>
+        /*  FOR STOPWATCH and TIMER */
+        .outerContainer {
+            background-color: wheat;
+            border: 5px solid black;
+            border-radius: 10px;
+        }
+        .innerContainer{
+            margin: 20px 20px;
+            border: 2px solid rgb(144, 0, 255);
+            background-color: rgb(195, 255, 235);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .heading{
+            background-color: rgb(165, 165, 210);
+            border: 3px solid rgb(0, 12, 87);
+            border-radius: 10px;
+            color: rgb(34, 0, 108);
+            font-size: xx-large;
+            margin: 10px 10px;
+            font-weight: 500;
+            padding: 5px;
+        }
+        .timeNotationBlock {
+            background-color: rgb(0, 207, 207);
+            margin: 0% 30%;
+            border-left: 4px solid rgb(0, 54, 77);
+        }
+        .startStopButtons {
+            margin: 20px 40px;
+            cursor: pointer;
+        }
+        .resetButtons {
+            color: white;
+            background-color: red;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 20px 40px;
+        }
+
+        /* For STOPWATCH only */
+
+        /* .clock{
+            border: 2px solid black;
+        } */
+        .clockItem {
+            display: inline-block;
+            margin: 20px 20px;
+        }
+        /* #stopwatchButtons{
+            border: 2px solid red;
+        } */
+        #STLapContainer{
+            display:none;
+            border: 2px solid rgb(0, 255, 98);
+            background-color: antiquewhite;
+        }
+        #lapHeading{
+            background-color: black;
+            color: rgb(30, 255, 0);
+        }
+        /* #lapBlocks{
+            border: 2px solid red;
+        } */
+
+        /* For TIMER only */
+        #upDownButtons{
+            /* border: 2px solid blue; */
+            display: flex;
+            justify-content: center;
+        }
+        .buttonBlocks{
+            display: flex;
+            flex-direction: column;
+            /* border: 2px solid red; */
+        }
+        #upButton{
+            background-color: rgb(203, 255, 203);
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            width: 50px;
+            margin: 0px 7px;
+            cursor: pointer;
+        }
+        #downButton{
+            background-color: rgb(143, 255, 143);
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            width: 50px;
+            margin: 0px 7px;
+            cursor: pointer;
+        }
+        #TMMessage{
+            display: none;
+            color: red;
+            background-color: black;
+            width:80%;
+            margin: 20px auto;
+            border: 5px solid rgb(255, 0, 0);
+             /*
+            border-right: 10px solid rgb(255, 0, 0); */
+            /* height: 100px; */
+            /* box-shadow: 10px 10px red; */
+            justify-content: center;
+            align-items: center;
+            font-size: xx-large;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Outer Container for STOPWATCH and TIMER both -->
+    <div class="outerContainer">
+        <!-- Inner Container For STOPWATCH -->
+        <div class="innerContainer" id="stopwatchContainer">
+            <!-- HEADING -->
+            <div class="heading">Stopwatch</div>
+            <!-- Time NOTATIONS -->
+            <div class="timeNotationBlock">
+                Hours:
+                Minutes:
+                Seconds
+            </div>
+            <!-- Actual STOPWATCH or CLOCK -->
+            <div class="clock">
+                <div class="clockItem" id="STHoursBlock">0</div>:
+                <div class="clockItem" id="STMinutesBlock">0</div>:
+                <div class="clockItem" id="STSecondsBlock">0</div>
+            </div>
+            <!-- START/STOP Buttons -->
+            <div id="stopwatchButtons">
+                <button class="startStopButtons" id="STStartStopButton" onclick="startStopStopwatch()">START</button>
+                <button class="resetButtons" onclick="resetStopwatch()">RESET</button>
+            </div>
+            <div id="STLapContainer">
+                <div id="lapHeading">Time Stamps:</div>
+                <div id="lapInfoContainer">
+                    <span style="color:red">S.No</span> ~>  Hours:
+                    Minutes:
+                    Seconds
+                </div>
+                
+                <div id="STLapBlocks">
+                    
+                </div>
+                <div>
+                    <button id="flagButton" onclick="flag()">Flag</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Inner Container for TIMER -->
+        <div class="innerContainer" id="timerContainer">
+            <!-- HEADING -->
+            <div class="heading">Timer</div>
+            <!-- Time NOTATIONS -->
+            <div class="timeNotationBlock">
+                Hours:
+                Minutes:
+                Seconds
+            </div>
+            <!-- Actual TIMER or CLOCK -->
+            <div class="clock">
+                <div class="clockItem" id="TMHoursBlock">0</div>:
+                <div class="clockItem" id="TMMinutesBlock">0</div>:
+                <div class="clockItem" id="TMSecondsBlock">0</div>
+                <!-- BUTTONS to Increase or decrease HOURS, MINUTES or SECONDS -->
+                <div id="upDownButtons">
+                    <div class="buttonBlocks">
+                        <button id="upButton" onclick="upHoursTimer()">Up</button>
+                        <button id="downButton" onclick="downHoursTimer()">Down</button>
+                    </div>
+                    <div class="buttonBlocks">
+                        <button id="upButton" onclick="upMinutesTimer()">Up</button>
+                        <button id="downButton" onclick="downMinutesTimer()">Down</button>
+                    </div>
+                    <div class="buttonBlocks">
+                        <button id="upButton" onclick="upSecondsTimer()">Up</button>
+                        <button id="downButton" onclick="downSecondsTimer()">Down</button>
+                    </div>
+                    
+                </div>
+                <!-- Time Over Message -->
+                <div id="TMMessage">Time Over !!!</div>
+                <!-- START/STOP Buttons -->
+                <div id="timerButtons">
+                    <button class="startStopButtons" id="TMStartStopButton" onclick="startStopTimer()">START</button>
+                    <button class="resetButtons" onclick="resetTimer()">RESET</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        //VARIABLE DECLARATIONS
+                //STOPWATCH Variables
+        let STSecondsBlock = document.getElementById('STSecondsBlock');
+        let STMinutesBlock = document.getElementById('STMinutesBlock');
+        let STHoursBlock = document.getElementById('STHoursBlock');
+        let STAction = document.getElementById('STStartStopButton');
+        let STLapContainer = document.getElementById('STLapContainer');
+        let STLapBlocks = document.getElementById('STLapBlocks');
+        let STSec = 0;
+        let STMin = 0;
+        let STHou = 0;
+        let STTotalTimeStamps=0;
+
+                //TIMER Variables
+        let TMSecondsBlock = document.getElementById('TMSecondsBlock');
+        let TMMinutesBlock = document.getElementById('TMMinutesBlock');
+        let TMHoursBlock = document.getElementById('TMHoursBlock');
+        let TMAction = document.getElementById('TMStartStopButton');
+        let TMMessage = document.getElementById('TMMessage');
+        let TMSec = 0;
+        let TMMin = 0;
+        let TMHou = 0;
+
+        //FUNCTIONS
+
+        //STOPWATCH Functions
+        function secondsStartStopwatch() {
+            STSec++;
+            if (STSec == 60) {
+                STSec = 0;
+            }
+            STSecondsBlock.innerHTML = STSec;
+        }
+        function minutesStartStopwatch() {
+            STMin++;
+            if (STMin == 60) {
+                STMin = 0;
+            }
+            STMinutesBlock.innerHTML = STMin;
+        }
+        function hoursStartStopwatch() {
+            STHou++;
+            if (STHou == 60) {
+                STHou = 0;
+            }
+            STHoursBlock.innerHTML = STHou;
+        }
+        function startStopStopwatch() {
+            if (STAction.innerHTML == 'START'||STAction.innerHTML=='RESUME') {
+                STAction.innerHTML = 'PAUSE';
+                STLapContainer.style.display = 'block';
+                STintervalIDSec = setInterval(secondsStartStopwatch, 1000);
+                STintervalIDMin = setInterval(minutesStartStopwatch, 60000);
+                STintervalIDHou = setInterval(hoursStartStopwatch, 3600000);
+                // console.log(STintervalID);
+
+
+            }
+            else {
+                STAction.innerHTML = 'RESUME';
+                clearInterval(STintervalIDSec);
+                clearInterval(STintervalIDMin);
+                clearInterval(STintervalIDHou);
+            }
+        }
+        function resetStopwatch() {
+            STAction.innerHTML = 'START';
+            STSec = 0;
+            STMin = 0;
+            STHou = 0;
+            STTotalTimeStamps=0;
+            STSecondsBlock.innerHTML = STSec;
+            STMinutesBlock.innerHTML = STMin;
+            STHoursBlock.innerHTML = STHou;
+            STLapContainer.style.display = 'none';
+            
+            STLapBlocks.innerHTML="";
+
+            clearInterval(STintervalIDSec);
+            clearInterval(STintervalIDMin);
+            clearInterval(STintervalIDHou);
+        }
+        function flag(){
+            const block = document.createElement('div');
+            const sno = document.createElement('span');
+            const s = document.createElement('span');
+            const m = document.createElement('span');
+            const h = document.createElement('span');
+            const colon1 = document.createElement('span');
+            const colon2 = document.createElement('span');
+            const colon3 = document.createElement('span');
+            colon1.innerHTML=' ~> ';
+            colon2.innerHTML=' : ';
+            colon3.innerHTML=' : ';
+            STTotalTimeStamps++;
+            sno.innerHTML=STTotalTimeStamps;
+            sno.style.color='red';
+            s.innerHTML=STSec;
+            s.style.color='blue';
+            m.innerHTML=STMin;
+            m.style.color='blue';
+            h.innerHTML=STHou;
+            h.style.color='blue';
+            block.appendChild(sno);
+            block.appendChild(colon1);
+            block.appendChild(h);
+            block.appendChild(colon2);
+            block.appendChild(m);
+            block.appendChild(colon3);
+            block.appendChild(s);
+            // block.innerHTML="Hii";
+            document.getElementById('STLapBlocks').appendChild(block);
+        }
+
+
+        //TIMER Functions
+        //Up-Down Functions for TIMER
+        function upSecondsTimer(){
+            TMSec++;
+            if(TMSec==60){
+                TMSec=0;
+            }
+            TMSecondsBlock.innerHTML=TMSec;
+        }
+        function downSecondsTimer(){
+            TMSec--;
+            if(TMSec==-1){
+                TMSec=59;
+            }
+            TMSecondsBlock.innerHTML=TMSec;
+        }
+        function upMinutesTimer(){
+            TMMin++;
+            if(TMMin==60){
+                TMMin=0;
+            }
+            TMMinutesBlock.innerHTML=TMMin;
+        }
+        function downMinutesTimer(){
+            TMMin--;
+            if(TMMin==-1){
+                TMMin=59;
+            }
+            TMMinutesBlock.innerHTML=TMMin;
+        }
+        function upHoursTimer(){
+            TMHou++;
+            if(TMHou==60){
+                TMHou=0;
+            }
+            TMHoursBlock.innerHTML=TMHou;
+        }
+        function downHoursTimer(){
+            TMHou--;
+            if(TMHou==-1){
+                TMHou=59;
+            }
+            TMHoursBlock.innerHTML=TMHou;
+        }
+
+        //Helping Functions For Starting TIMER
+        function hoursStartTimer(){
+            TMHou--;
+            if(TMHou==-1){
+                TMHou=0;
+            }
+            TMHoursBlock.innerHTML=TMHou;
+        }
+        function minutesStartTimer(){
+            TMMin--;
+            if(TMMin==-1){
+                if(TMHou!=0){
+                    TMMin=59;
+                    hoursStartTimer();
+                }
+                else{
+                    TMMin=0;
+                }
+            }
+            TMMinutesBlock.innerHTML=TMMin;
+        }
+        function secondsStartTimer(){
+            TMSec--;
+            if(TMSec==-1){
+                if(TMMin!=0 || TMHou!=0){
+                    TMSec=59;
+                    minutesStartTimer();
+                }
+                else{
+                    TMSec=0;
+                    TMMessage.style.display='flex';
+                    TMAction.innerHTML='START'
+                    clearInterval(TMIntervalIDSec);
+                }
+            }
+            TMSecondsBlock.innerHTML=TMSec;
+        }
+        
+
+        //StartStop and Reset Functions For TIMER
+        function startStopTimer(){
+            if(TMAction.innerHTML=='START'||TMAction.innerHTML=='RESUME'){
+                TMAction.innerHTML='PAUSE';
+                TMMessage.style.display='none';
+                TMIntervalIDSec=setInterval(secondsStartTimer,1000);                
+            }
+            else{
+                TMAction.innerHTML='RESUME';
+                clearInterval(TMIntervalIDSec);
+            }
+
+        }
+        function resetTimer(){
+            TMSec = 0;
+            TMMin = 0;
+            TMHou = 0;
+            TMSecondsBlock.innerHTML=TMSec;
+            TMMinutesBlock.innerHTML=TMMin;
+            TMHoursBlock.innerHTML=TMHou;
+            TMAction.innerHTML='START';
+            clearInterval(TMIntervalIDSec);
+            TMMessage.style.display='none';
+
+        }
+
+
+    </script>
+</body>
+
+</html>
